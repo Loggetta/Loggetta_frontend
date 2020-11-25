@@ -1,0 +1,12 @@
+public
+savedata
+package-lock.json
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# electron build folders
+loggetta-win32-x64/

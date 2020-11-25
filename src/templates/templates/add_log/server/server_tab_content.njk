@@ -1,0 +1,44 @@
+<div class="tab-pane fade" id="serverView">
+	<form>
+	<div class="form-group">
+		<label for="nameInput">Name</label>
+		<input type="text" class="form-control" placeholder="Name" id="nameInput" v-model="server.name">
+	</div>
+	<div class="form-group">
+		<label for="hostInput">Host</label>
+		<input type="text" class="form-control" placeholder="Host" id="hostInput" v-model="server.host">
+	</div>
+	<div class="form-group">
+		<label for="usernameInput">Username</label>
+		<input type="text" class="form-control" placeholder="Username" id="usernameInput" v-model="server.user">
+	</div>
+	<div class="form-group">
+		<label for="portInput">Port</label>
+		<input type="text" class="form-control" placeholder="Port" id="portInput" v-model="server.port">
+	</div>
+
+	<div class="form-check">
+		<a v-on:click="addServer" class="btn btn-primary">Add server</a>
+	</div>
+
+	</form>
+	<!-- Server overview -->
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">User</th>
+				<th scope="col">Server</th>
+				<th scope="col">Port</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="serv in savedServers">
+				<td>${serv.name}</td>
+				<td>${serv.user}</td>
+				<td>${serv.host}</td>
+				<td>${serv.port}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

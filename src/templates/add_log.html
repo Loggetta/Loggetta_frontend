@@ -1,0 +1,194 @@
+
+{% extends "./pagetemplates/pt_default.njk" %}
+
+{% block content %}
+	{% include "./rendertemplates/index_nav.njk" %}
+
+	<main role="main" class="container" id="app">
+
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			{% include "add_log/local/local_tab.njk" %}
+			{% include "add_log/ssh/ssh_tab.njk" %}
+			{% include "add_log/server/server_tab.njk" %}
+		</ul>
+		<div class="tab-content" id="myTabContent">
+
+			{% include "add_log/local/local_tab_content.njk" %}
+			{% include "add_log/ssh/ssh_tab_content.njk" %}
+			{% include "add_log/server/server_tab_content.njk" %}
+
+<!-- TODO -->
+<div id="logSettingsApp">
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Regex
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+      
+  <div class="form-group row">
+    <label for="firstLogLine" class="col-sm-2 col-form-label">Log</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control-plaintext" id="firstLogLine" value="" v-model="firstLogLine" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="simpleDateFormat" class="col-sm-2 col-form-label">Simple Date Format</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="simpleDateFormat" v-model="simpleDateFormat">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="regex" class="col-sm-2 col-form-label">Regex</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="regex" v-model="regex">
+    </div>
+  </div>
+<p>
+    <button class="btn btn-primary" v-on:click="checkGroups" :disabled="(regex === '' || simpleDateFormat === '')">Check groups</button>
+</p>
+<!--  <div class="form-group row">
+  </div>-->
+
+<table class="table table-bordered">
+<thead>
+<tr>
+<th scope="col">Part</th>
+<th scope="col">Choice</th>
+</tr>
+</thead>
+<tbody>
+<tr v-for="group in groups">
+<td>${group.text}</td>
+<td>
+
+<select class="form-control" id="exampleFormControlSelect1" v-model="group.selected">
+  <option>Level</option>
+  <option>Timestamp</option>
+  <option>Message</option>
+  <option>Ignore</option>
+</select>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+	<button class="btn btn-success" v-on:click="saveLocalLogfile" :disabled="saveDisabled">Save</button>
+</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Loglevel
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+
+<div class="form-inline" id="logLevelTable">
+
+  <div class="form-group mb-2">
+    <label for="level" >Log Level</label><!-- class="sr-only"-->
+  </div>
+  <div class="form-group mx-sm-3 mb-2">
+    <input type="text" class="form-control" id="level" v-model="newLogLevelName">
+  </div>
+  <button class="btn btn-primary mb-2" v-on:click="addNewLoglevel">Add</button>
+  
+<table class="table table-bordered" >
+  <thead>
+    <tr>
+      <th scope="col">Log Level</th>
+      <th scope="col">Hintergrund</th>
+      <th scope="col">Schriftfarbe</th>
+	  <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="(level, index) in loglevelList">
+      <td v-bind:style="{ color: level.color, background: level.background  }">(${index}) ${level.logLevel}</td>
+      <td><input type="color" name="background-color" v-model="level.background"></td>
+      <td><input type="color" name="color"  v-model="level.color"></td>
+	  <td v-on:click="removeLevel(index)"><i class="fas fa-minus-circle"></i></td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>
+
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Encoding of log
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <label class="form-check-label" for="exampleRadios1">
+    UTF-8
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    ISO-8859-1
+  </label>
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div> <!-- /#logSettingsApp -->
+
+
+</main><!-- /.container -->
+
+{% endblock %}
+
+<!--    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="http://localhost:3000/index.html">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+</nav>
+
+-->
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="js/external.js"></script>
+<script src="js/add_log_general.js"></script>
+<script src="js/add_local_log.js"></script>
+<!--<script src="js/add_server_log.js"></script>-->
+<script>
+  window.onbeforeunload = function() { return; };
+</script>
+
+{% endblock %}

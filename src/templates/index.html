@@ -1,0 +1,47 @@
+{% extends "./pagetemplates/pt_default.njk" %}
+{% block content %}
+
+{% include "./rendertemplates/index_nav.njk" %}
+
+
+<main role="main" class="container" id="app">
+	<div class="row">
+		<div class="col">
+			<p><a class="btn btn-primary" href="add_log.html">Add Log</a></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+					<th scope="col"></th>
+					<th scope="col">Name</th>
+					<th scope="col" style="display:none;">Server</th>
+					<th scope="col">Path</th>
+					</tr>
+				</thead>
+				<tbody>
+				<template v-for="logfile in logfiles">
+					<tr v-on:click="openLog(logfile)">
+						<td>
+							<i class="fas fa-home" v-if="logfile.isLocal"></i>
+							<i class="fas fa-server" v-if="!logfile.isLocal"></i>
+						</td>
+						<td>${logfile.name} (${logfile.id})</td>
+						<td style="display:none;"> TODO </td>
+						<td>${logfile.path}</td>
+						</tr>
+				</template>
+				</tbody>
+			</table>
+		</div>
+	</div>	
+	</main>
+{% endblock %}
+
+{% block scripts %}
+<!--  <script type="text/javascript" src="js/all.js"></script> -->
+	<script type="text/javascript" src="js/external.js"></script>
+	<script type="text/javascript" src="js/logfile_overview.js"></script>
+{% endblock %}

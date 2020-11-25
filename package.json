@@ -1,0 +1,43 @@
+{
+  "name": "loggetta",
+  "productName": "loggetta",
+  "version": "1.0.0",
+  "description": "Log getting tool",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp nunjucks scripts && gulp sass && gulp nunjucks && electron .",
+    "gulp": "gulp ",
+    "docs:serve": "docsify serve docs --port 3010 -o",
+    "build": "electron-packager . --extra-resource=../loggetta_express/ "
+  },
+  "author": "Robin Koetter",
+  "license": "MIT",
+  "devDependencies": {
+    "docsify-cli": "^4.4.0",
+    "electron": "^9.1.1",
+    "electron-packager": "^15.1.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-nunjucks": "^5.0.1",
+    "gulp-nunjucks-render": "^2.2.3",
+    "gulp-sass": "^4.0.2",
+    "gulp-watch": "^5.0.1",
+    "node-sass": "^4.13.1",
+    "nunjucks": "^3.2.0",
+    "zip-folder": "^1.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "browser-sync": "^2.26.7",
+    "express": "^4.17.1",
+    "n-readlines": "^1.0.0"
+  },
+  "pkg": {
+    "scripts": "node_modules/**",
+    "assets": [
+      "index.html",
+      "logview.html"
+    ]
+  }
+}
