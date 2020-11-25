@@ -4,11 +4,25 @@ os:
   - linux
 language: node_js
 node_js:
-  - 12
-install:
-  - npm install
+  - 14
 script:
-  - electron-packager .
+  - echo '-- build starts --'
+  - echo '-- clone backend --'
+  - cd ..
+  - git clone https://github.com/Loggetta/Loggetta_express.git
+  - echo '-- install dependencies of backend --'
+  - cd Loggetta_express
+  - npm install
+  - cd ../Loggetta_frontend
+  - echo '-- install dependencies of frontend --'
+  - npm install
+  - echo '-- run frontend builds --'
+  - gulp nunjucks scripts 
+  - gulp gulp sass
+  - gulp nunjucks
+  - echo '-- build app --'
+  - npm run build
+  - echo '-- zip --'
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then node zipper.js mac           ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then node zipper.js windows   ; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then node zipper.js linux       ; fi
