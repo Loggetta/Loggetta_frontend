@@ -18,7 +18,7 @@ script:
   - npm install
   - echo '-- run frontend builds --'
   - gulp nunjucks scripts 
-  - gulp gulp sass
+  - gulp sass
   - gulp nunjucks
   - echo '-- build app --'
   - npm run build
